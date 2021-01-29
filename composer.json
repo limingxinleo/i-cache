@@ -9,7 +9,7 @@
     "description": "",
     "autoload": {
         "psr-4": {
-            "Illuminat\\Cache\\": "src/"
+            "Illuminate\\Cache\\": "src/"
         }
     },
     "autoload-dev": {
@@ -19,7 +19,7 @@
     },
     "require": {
         "php": ">=7.2",
-        "hyperf/di": "2.1.*"
+        "hyperf/di": "^2.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
@@ -40,7 +40,7 @@
     },
     "extra": {
         "hyperf": {
-            "config": "Illuminat\\Cache\\ConfigProvider"
+            "config": "Illuminate\\Cache\\ConfigProvider"
         }
     }
 }
