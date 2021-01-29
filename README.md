@@ -1,5 +1,9 @@
-# component-creater
+# Laravel 缓存系统
+
+[illuminate/cache](https://github.com/illuminate/cache)
+
+## 组件嗨化计划
 
 ```
-composer create-project hyperf/component-creater
+composer require limingxinleo/i-cache
 ```
