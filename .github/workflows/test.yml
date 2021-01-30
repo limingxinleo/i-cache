@@ -26,6 +26,8 @@ jobs:
           tools: phpize
           ini-values: opcache.enable_cli=1
           coverage: none
+      - name: Setup Redis
+        run: docker run --name redis -p 6379:6379 --restart always -d redis
       - name: Setup Swoole
         if: ${{ matrix.engine == 'swoole' }}
         run: |
