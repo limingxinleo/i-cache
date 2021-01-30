@@ -11,12 +11,15 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
+use Illuminate\Cache\Contracts\Repository;
+
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
             'dependencies' => [
+                Repository::class => CacheManager::class,
             ],
             'commands' => [
             ],
