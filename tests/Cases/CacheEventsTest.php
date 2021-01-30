@@ -9,9 +9,8 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Illuminate\Tests\Cache;
+namespace HyperfTest\Cases;
 
-use HyperfTest\Cases\AbstractTestCase;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Contracts\Store;
 use Illuminate\Cache\Events\CacheHit;
