@@ -39,6 +39,9 @@
         "swow/swow": "dev-develop",
         "symfony/var-dumper": "^5.1"
     },
+    "replace": {
+        "illuminate/cache": "*"
+    },
     "suggests": {
         "hyperf/redis": "Required to use redis driver. (^2.0)"
     },
