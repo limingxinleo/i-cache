@@ -19,15 +19,15 @@ use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
 use Illuminate\Cache\Events\KeyWritten;
-use Illuminate\Contracts\Cache\Repository as CacheContract;
-use Illuminate\Contracts\Cache\Store;
+use Illuminate\Cache\Contracts\Repository as CacheContract;
+use Illuminate\Cache\Contracts\Store;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\InteractsWithTime;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * @mixin \Illuminate\Contracts\Cache\Store
+ * @mixin \Illuminate\Cache\Contracts\Store
  */
 class Repository implements ArrayAccess, CacheContract
 {
@@ -39,7 +39,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * The cache store implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Store
+     * @var \Illuminate\Cache\Contracts\Store
      */
     protected $store;
 
@@ -508,7 +508,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Get the cache store implementation.
      *
-     * @return \Illuminate\Contracts\Cache\Store
+     * @return \Illuminate\Cache\Contracts\Store
      */
     public function getStore()
     {

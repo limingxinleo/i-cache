@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\Store;
+use Illuminate\Cache\Contracts\Store;
 
 abstract class TaggableStore implements Store
 {

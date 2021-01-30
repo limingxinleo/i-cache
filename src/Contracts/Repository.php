@@ -108,7 +108,7 @@ interface Repository extends CacheInterface
     /**
      * Get the cache store implementation.
      *
-     * @return \Illuminate\Contracts\Cache\Store
+     * @return \Illuminate\Cache\Contracts\Store
      */
     public function getStore();
 }

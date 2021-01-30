@@ -193,7 +193,7 @@ class RedisStore extends TaggableStore implements LockProvider
      * @param string $name
      * @param int $seconds
      * @param null|string $owner
-     * @return \Illuminate\Contracts\Cache\Lock
+     * @return \Illuminate\Cache\Contracts\Lock
      */
     public function lock($name, $seconds = 0, $owner = null)
     {
@@ -205,7 +205,7 @@ class RedisStore extends TaggableStore implements LockProvider
      *
      * @param string $name
      * @param string $owner
-     * @return \Illuminate\Contracts\Cache\Lock
+     * @return \Illuminate\Cache\Contracts\Lock
      */
     public function restoreLock($name, $owner)
     {

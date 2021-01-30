@@ -17,7 +17,7 @@ interface Factory
      * Get a cache store instance by name.
      *
      * @param null|string $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Cache\Contracts\Repository
      */
     public function store($name = null);
 }

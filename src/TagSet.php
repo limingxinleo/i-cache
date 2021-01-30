@@ -11,14 +11,14 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\Store;
+use Illuminate\Cache\Contracts\Store;
 
 class TagSet
 {
     /**
      * The cache store implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Store
+     * @var \Illuminate\Cache\Contracts\Store
      */
     protected $store;
 
