@@ -13,6 +13,7 @@ namespace Illuminate\Cache;
 
 use Closure;
 use Hyperf\Contract\ConfigInterface;
+use Hyperf\Redis\RedisFactory;
 use Illuminate\Cache\Contracts\Factory as FactoryContract;
 use Illuminate\Cache\Contracts\Store;
 use InvalidArgumentException;
@@ -126,7 +127,7 @@ class CacheManager implements FactoryContract
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']['i_cache.default'] = $name;
+        $this->app->get(ConfigInterface::class)->set('i_cache.default', $name);
     }
 
     /**
@@ -237,7 +238,11 @@ class CacheManager implements FactoryContract
      */
     protected function createFileDriver(array $config)
     {
-        return $this->repository(new FileStore($this->app['files'], $config['path'], $config['permission'] ?? null));
+        $store = make(FileStore::class, [
+            'directory' => $config['path'],
+            'filePermission' => $config['permission'] ?? null,
+        ]);
+        return $this->repository($store);
     }
 
     /**
@@ -257,7 +262,7 @@ class CacheManager implements FactoryContract
      */
     protected function createRedisDriver(array $config)
     {
-        $redis = $this->app['redis'];
+        $redis = $this->app->get(RedisFactory::class);
 
         $connection = $config['connection'] ?? 'default';
 
