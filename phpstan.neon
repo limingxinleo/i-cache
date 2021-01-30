@@ -3,6 +3,8 @@
 #
 
 parameters:
+  bootstrapFiles:
+    - "tests/bootstrap.php"
   treatPhpDocTypesAsCertain: true
   reportUnmatchedIgnoredErrors: false
   ignoreErrors:
