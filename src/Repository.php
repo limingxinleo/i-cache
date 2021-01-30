@@ -212,7 +212,6 @@ class Repository implements ArrayAccess, CacheContract
         }
 
         $result = $this->store->put($this->itemKey($key), $value, $seconds);
-
         if ($result) {
             $this->event(new KeyWritten($key, $value, $seconds));
         }
