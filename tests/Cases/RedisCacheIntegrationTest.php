@@ -26,6 +26,14 @@ class RedisCacheIntegrationTest extends AbstractTestCase
 
     protected function setUp(): void
     {
+        $shouldNotSpippend = extension_loaded('swoole')
+            || (extension_loaded('swow') && version_compare(PHP_VERSION, '7.3', '>='));
+        if (! $shouldNotSpippend) {
+            $this->markTestSkipped('hyperf/redis is not avaliable.');
+
+            return;
+        }
+
         parent::setUp();
         $this->setUpRedis();
     }
