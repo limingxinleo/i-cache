@@ -2,23 +2,24 @@
 
 namespace Illuminate\Cache;
 
-use Aws\DynamoDb\DynamoDbClient;
 use Closure;
-use Illuminate\Contracts\Cache\Factory as FactoryContract;
-use Illuminate\Contracts\Cache\Store;
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
-use Illuminate\Support\Arr;
+use Hyperf\Contract\ConfigInterface;
+use Illuminate\Cache\Contracts\Factory as FactoryContract;
+use Illuminate\Cache\Contracts\Store;
+use Psr\EventDispatcher\EventDispatcherInterface as DispatcherContract;
+use Hyperf\Utils\Arr;
 use InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 
 /**
- * @mixin \Illuminate\Contracts\Cache\Repository
+ * @mixin \Illuminate\Cache\Contracts\Repository
  */
 class CacheManager implements FactoryContract
 {
     /**
      * The application instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var ContainerInterface
      */
     protected $app;
 
@@ -38,11 +39,8 @@ class CacheManager implements FactoryContract
 
     /**
      * Create a new Cache manager instance.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     * @return void
      */
-    public function __construct($app)
+    public function __construct(ContainerInterface $app)
     {
         $this->app = $app;
     }
@@ -51,7 +49,7 @@ class CacheManager implements FactoryContract
      * Get a cache store instance by name, wrapped in a repository.
      *
      * @param  string|null  $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Cache\Contracts\Repository
      */
     public function store($name = null)
     {
@@ -64,7 +62,7 @@ class CacheManager implements FactoryContract
      * Get a cache driver instance.
      *
      * @param  string|null  $driver
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Cache\Contracts\Repository
      */
     public function driver($driver = null)
     {
@@ -75,7 +73,7 @@ class CacheManager implements FactoryContract
      * Attempt to get the store from the local cache.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Cache\Contracts\Repository
      */
     protected function get($name)
     {
@@ -86,7 +84,7 @@ class CacheManager implements FactoryContract
      * Resolve the given store.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Cache\Contracts\Repository
      *
      * @throws \InvalidArgumentException
      */
@@ -282,12 +280,12 @@ class CacheManager implements FactoryContract
      */
     protected function setEventDispatcher(Repository $repository)
     {
-        if (! $this->app->bound(DispatcherContract::class)) {
+        if (! $this->app->has(DispatcherContract::class)) {
             return;
         }
 
         $repository->setEventDispatcher(
-            $this->app[DispatcherContract::class]
+            $this->app->get(DispatcherContract::class)
         );
     }
 
@@ -320,11 +318,12 @@ class CacheManager implements FactoryContract
      */
     protected function getConfig($name)
     {
+        $default = ['driver' => 'null'];
         if (! is_null($name) && $name !== 'null') {
-            return $this->app['config']["cache.stores.{$name}"];
+            return $this->app->get(ConfigInterface::class)->get("i_cache.stores.{$name}", $default);
         }
 
-        return ['driver' => 'null'];
+        return $default;
     }
 
     /**
@@ -334,7 +333,7 @@ class CacheManager implements FactoryContract
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['cache.default'];
+        return $this->app->get(ConfigInterface::class)->get('i_cache.default', 'file');
     }
 
     /**

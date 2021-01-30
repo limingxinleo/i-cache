@@ -2,8 +2,8 @@
 
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\LockProvider;
-use Illuminate\Support\InteractsWithTime;
+use Illuminate\Cache\Contracts\LockProvider;
+use Hyperf\Utils\InteractsWithTime;
 
 class ArrayStore extends TaggableStore implements LockProvider
 {
