@@ -22,6 +22,7 @@ use Psr\EventDispatcher\EventDispatcherInterface as DispatcherContract;
 
 /**
  * @mixin \Illuminate\Cache\Contracts\Repository
+ * @mixin TaggableStore
  */
 class CacheManager implements FactoryContract
 {
