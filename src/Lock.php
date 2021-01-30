@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Illuminate\Contracts\Cache\Lock as LockContract;
@@ -42,10 +51,9 @@ abstract class Lock implements LockContract
     /**
      * Create a new lock instance.
      *
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @return void
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
      */
     public function __construct($name, $seconds, $owner = null)
     {
@@ -73,16 +81,9 @@ abstract class Lock implements LockContract
     abstract public function release();
 
     /**
-     * Returns the owner value written into the driver for this lock.
-     *
-     * @return string
-     */
-    abstract protected function getCurrentOwner();
-
-    /**
      * Attempt to acquire the lock.
      *
-     * @param  callable|null  $callback
+     * @param null|callable $callback
      * @return mixed
      */
     public function get($callback = null)
@@ -103,11 +104,10 @@ abstract class Lock implements LockContract
     /**
      * Attempt to acquire the lock for the given number of seconds.
      *
-     * @param  int  $seconds
-     * @param  callable|null  $callback
-     * @return mixed
-     *
+     * @param int $seconds
+     * @param null|callable $callback
      * @throws \Illuminate\Contracts\Cache\LockTimeoutException
+     * @return mixed
      */
     public function block($seconds, $callback = null)
     {
@@ -117,7 +117,7 @@ abstract class Lock implements LockContract
             usleep($this->sleepMilliseconds * 1000);
 
             if ($this->currentTime() - $seconds >= $starting) {
-                throw new LockTimeoutException;
+                throw new LockTimeoutException();
             }
         }
 
@@ -143,19 +143,9 @@ abstract class Lock implements LockContract
     }
 
     /**
-     * Determines whether this lock is allowed to release the lock in the driver.
-     *
-     * @return bool
-     */
-    protected function isOwnedByCurrentProcess()
-    {
-        return $this->getCurrentOwner() === $this->owner;
-    }
-
-    /**
      * Specify the number of milliseconds to sleep in between blocked lock acquisition attempts.
      *
-     * @param  int  $milliseconds
+     * @param int $milliseconds
      * @return $this
      */
     public function betweenBlockedAttemptsSleepFor($milliseconds)
@@ -163,5 +153,22 @@ abstract class Lock implements LockContract
         $this->sleepMilliseconds = $milliseconds;
 
         return $this;
+    }
+
+    /**
+     * Returns the owner value written into the driver for this lock.
+     *
+     * @return string
+     */
+    abstract protected function getCurrentOwner();
+
+    /**
+     * Determines whether this lock is allowed to release the lock in the driver.
+     *
+     * @return bool
+     */
+    protected function isOwnedByCurrentProcess()
+    {
+        return $this->getCurrentOwner() === $this->owner;
     }
 }

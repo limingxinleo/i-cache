@@ -1,6 +1,14 @@
 <?php
 
-
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache\Contracts;
 
 interface LockProvider
@@ -10,7 +18,7 @@ interface LockProvider
      *
      * @param string $name
      * @param int $seconds
-     * @param string|null $owner
+     * @param null|string $owner
      * @return \Illuminate\Contracts\Cache\Lock
      */
     public function lock($name, $seconds = 0, $owner = null);
@@ -24,4 +32,3 @@ interface LockProvider
      */
     public function restoreLock($name, $owner);
 }
-

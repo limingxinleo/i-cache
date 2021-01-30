@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Carbon\Carbon;
@@ -16,11 +25,10 @@ class ArrayLock extends Lock
     /**
      * Create a new lock instance.
      *
-     * @param  \Illuminate\Cache\ArrayStore  $store
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @return void
+     * @param \Illuminate\Cache\ArrayStore $store
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
      */
     public function __construct($store, $name, $seconds, $owner = null)
     {
@@ -51,16 +59,6 @@ class ArrayLock extends Lock
     }
 
     /**
-     * Determine if the current lock exists.
-     *
-     * @return bool
-     */
-    protected function exists()
-    {
-        return isset($this->store->locks[$this->name]);
-    }
-
-    /**
      * Release the lock.
      *
      * @return bool
@@ -81,6 +79,24 @@ class ArrayLock extends Lock
     }
 
     /**
+     * Releases this lock in disregard of ownership.
+     */
+    public function forceRelease()
+    {
+        unset($this->store->locks[$this->name]);
+    }
+
+    /**
+     * Determine if the current lock exists.
+     *
+     * @return bool
+     */
+    protected function exists()
+    {
+        return isset($this->store->locks[$this->name]);
+    }
+
+    /**
      * Returns the owner value written into the driver for this lock.
      *
      * @return string
@@ -88,15 +104,5 @@ class ArrayLock extends Lock
     protected function getCurrentOwner()
     {
         return $this->store->locks[$this->name]['owner'];
-    }
-
-    /**
-     * Releases this lock in disregard of ownership.
-     *
-     * @return void
-     */
-    public function forceRelease()
-    {
-        unset($this->store->locks[$this->name]);
     }
 }

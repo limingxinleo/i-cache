@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 class RedisLock extends Lock
@@ -14,11 +23,10 @@ class RedisLock extends Lock
     /**
      * Create a new lock instance.
      *
-     * @param  \Illuminate\Redis\Connections\Connection  $redis
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @return void
+     * @param \Illuminate\Redis\Connections\Connection $redis
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
      */
     public function __construct($redis, $name, $seconds, $owner = null)
     {
@@ -36,9 +44,8 @@ class RedisLock extends Lock
     {
         if ($this->seconds > 0) {
             return $this->redis->set($this->name, $this->owner, 'EX', $this->seconds, 'NX') == true;
-        } else {
-            return $this->redis->setnx($this->name, $this->owner) === 1;
         }
+        return $this->redis->setnx($this->name, $this->owner) === 1;
     }
 
     /**
@@ -53,22 +60,10 @@ class RedisLock extends Lock
 
     /**
      * Releases this lock in disregard of ownership.
-     *
-     * @return void
      */
     public function forceRelease()
     {
         $this->redis->del($this->name);
-    }
-
-    /**
-     * Returns the owner value written into the driver for this lock.
-     *
-     * @return string
-     */
-    protected function getCurrentOwner()
-    {
-        return $this->redis->get($this->name);
     }
 
     /**
@@ -79,5 +74,15 @@ class RedisLock extends Lock
     public function getConnectionName()
     {
         return $this->redis->getName();
+    }
+
+    /**
+     * Returns the owner value written into the driver for this lock.
+     *
+     * @return string
+     */
+    protected function getCurrentOwner()
+    {
+        return $this->redis->get($this->name);
     }
 }

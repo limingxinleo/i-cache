@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 class MemcachedLock extends Lock
@@ -14,11 +23,10 @@ class MemcachedLock extends Lock
     /**
      * Create a new lock instance.
      *
-     * @param  \Memcached  $memcached
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @return void
+     * @param \Memcached $memcached
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
      */
     public function __construct($memcached, $name, $seconds, $owner = null)
     {
@@ -35,7 +43,9 @@ class MemcachedLock extends Lock
     public function acquire()
     {
         return $this->memcached->add(
-            $this->name, $this->owner, $this->seconds
+            $this->name,
+            $this->owner,
+            $this->seconds
         );
     }
 
@@ -55,8 +65,6 @@ class MemcachedLock extends Lock
 
     /**
      * Releases this lock in disregard of ownership.
-     *
-     * @return void
      */
     public function forceRelease()
     {

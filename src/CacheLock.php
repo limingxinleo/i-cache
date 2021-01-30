@@ -1,7 +1,15 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
-
 
 class CacheLock extends Lock
 {
@@ -15,11 +23,10 @@ class CacheLock extends Lock
     /**
      * Create a new lock instance.
      *
-     * @param  \Illuminate\Cache\Contracts\Store  $store
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @return void
+     * @param \Illuminate\Cache\Contracts\Store $store
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
      */
     public function __construct($store, $name, $seconds, $owner = null)
     {
@@ -37,7 +44,9 @@ class CacheLock extends Lock
     {
         if (method_exists($this->store, 'add') && $this->seconds > 0) {
             return $this->store->add(
-                $this->name, $this->owner, $this->seconds
+                $this->name,
+                $this->owner,
+                $this->seconds
             );
         }
 
@@ -66,8 +75,6 @@ class CacheLock extends Lock
 
     /**
      * Releases this lock regardless of ownership.
-     *
-     * @return void
      */
     public function forceRelease()
     {

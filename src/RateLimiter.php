@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Closure;
@@ -26,9 +35,6 @@ class RateLimiter
 
     /**
      * Create a new rate limiter instance.
-     *
-     * @param  \Illuminate\Contracts\Cache\Repository  $cache
-     * @return void
      */
     public function __construct(Cache $cache)
     {
@@ -38,8 +44,6 @@ class RateLimiter
     /**
      * Register a named limiter configuration.
      *
-     * @param  string  $name
-     * @param  \Closure  $callback
      * @return $this
      */
     public function for(string $name, Closure $callback)
@@ -52,7 +56,6 @@ class RateLimiter
     /**
      * Get the given named rate limiter.
      *
-     * @param  string  $name
      * @return \Closure
      */
     public function limiter(string $name)
@@ -63,14 +66,14 @@ class RateLimiter
     /**
      * Determine if the given key has been "accessed" too many times.
      *
-     * @param  string  $key
-     * @param  int  $maxAttempts
+     * @param string $key
+     * @param int $maxAttempts
      * @return bool
      */
     public function tooManyAttempts($key, $maxAttempts)
     {
         if ($this->attempts($key) >= $maxAttempts) {
-            if ($this->cache->has($key.':timer')) {
+            if ($this->cache->has($key . ':timer')) {
                 return true;
             }
 
@@ -83,14 +86,16 @@ class RateLimiter
     /**
      * Increment the counter for a given key for a given decay time.
      *
-     * @param  string  $key
-     * @param  int  $decaySeconds
+     * @param string $key
+     * @param int $decaySeconds
      * @return int
      */
     public function hit($key, $decaySeconds = 60)
     {
         $this->cache->add(
-            $key.':timer', $this->availableAt($decaySeconds), $decaySeconds
+            $key . ':timer',
+            $this->availableAt($decaySeconds),
+            $decaySeconds
         );
 
         $added = $this->cache->add($key, 0, $decaySeconds);
@@ -107,7 +112,7 @@ class RateLimiter
     /**
      * Get the number of attempts for the given key.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function attempts($key)
@@ -118,7 +123,7 @@ class RateLimiter
     /**
      * Reset the number of attempts for the given key.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function resetAttempts($key)
@@ -129,8 +134,8 @@ class RateLimiter
     /**
      * Get the number of retries left for the given key.
      *
-     * @param  string  $key
-     * @param  int  $maxAttempts
+     * @param string $key
+     * @param int $maxAttempts
      * @return int
      */
     public function retriesLeft($key, $maxAttempts)
@@ -143,24 +148,23 @@ class RateLimiter
     /**
      * Clear the hits and lockout timer for the given key.
      *
-     * @param  string  $key
-     * @return void
+     * @param string $key
      */
     public function clear($key)
     {
         $this->resetAttempts($key);
 
-        $this->cache->forget($key.':timer');
+        $this->cache->forget($key . ':timer');
     }
 
     /**
      * Get the number of seconds until the "key" is accessible again.
      *
-     * @param  string  $key
+     * @param string $key
      * @return int
      */
     public function availableIn($key)
     {
-        return $this->cache->get($key.':timer') - $this->currentTime();
+        return $this->cache->get($key . ':timer') - $this->currentTime();
     }
 }

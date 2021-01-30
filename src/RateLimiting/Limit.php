@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache\RateLimiting;
 
 class Limit
@@ -35,10 +44,7 @@ class Limit
     /**
      * Create a new limit instance.
      *
-     * @param  mixed|string  $key
-     * @param  int  $maxAttempts
-     * @param  int  $decayMinutes
-     * @return void
+     * @param mixed|string $key
      */
     public function __construct($key = '', int $maxAttempts = 60, int $decayMinutes = 1)
     {
@@ -50,7 +56,7 @@ class Limit
     /**
      * Create a new rate limit.
      *
-     * @param  int  $maxAttempts
+     * @param int $maxAttempts
      * @return static
      */
     public static function perMinute($maxAttempts)
@@ -61,8 +67,8 @@ class Limit
     /**
      * Create a new rate limit using hours as decay time.
      *
-     * @param  int  $maxAttempts
-     * @param  int  $decayHours
+     * @param int $maxAttempts
+     * @param int $decayHours
      * @return static
      */
     public static function perHour($maxAttempts, $decayHours = 1)
@@ -73,8 +79,8 @@ class Limit
     /**
      * Create a new rate limit using days as decay time.
      *
-     * @param  int  $maxAttempts
-     * @param  int  $decayDays
+     * @param int $maxAttempts
+     * @param int $decayDays
      * @return static
      */
     public static function perDay($maxAttempts, $decayDays = 1)
@@ -89,13 +95,13 @@ class Limit
      */
     public static function none()
     {
-        return new Unlimited;
+        return new Unlimited();
     }
 
     /**
      * Set the key of the rate limit.
      *
-     * @param  string  $key
+     * @param string $key
      * @return $this
      */
     public function by($key)
@@ -108,7 +114,6 @@ class Limit
     /**
      * Set the callback that should generate the response when the limit is exceeded.
      *
-     * @param  callable  $callback
      * @return $this
      */
     public function response(callable $callback)

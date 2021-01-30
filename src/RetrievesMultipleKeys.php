@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 trait RetrievesMultipleKeys
@@ -9,7 +18,6 @@ trait RetrievesMultipleKeys
      *
      * Items not found in the cache will have a null value.
      *
-     * @param  array  $keys
      * @return array
      */
     public function many(array $keys)
@@ -26,8 +34,7 @@ trait RetrievesMultipleKeys
     /**
      * Store multiple items in the cache for a given number of seconds.
      *
-     * @param  array  $values
-     * @param  int  $seconds
+     * @param int $seconds
      * @return bool
      */
     public function putMany(array $values, $seconds)

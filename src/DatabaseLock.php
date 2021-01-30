@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Illuminate\Database\Connection;
@@ -32,13 +41,11 @@ class DatabaseLock extends Lock
     /**
      * Create a new lock instance.
      *
-     * @param  \Illuminate\Database\Connection  $connection
-     * @param  string  $table
-     * @param  string  $name
-     * @param  int  $seconds
-     * @param  string|null  $owner
-     * @param  array  $lottery
-     * @return void
+     * @param string $table
+     * @param string $name
+     * @param int $seconds
+     * @param null|string $owner
+     * @param array $lottery
      */
     public function __construct(Connection $connection, $table, $name, $seconds, $owner = null, $lottery = [2, 100])
     {
@@ -87,16 +94,6 @@ class DatabaseLock extends Lock
     }
 
     /**
-     * Get the UNIX timestamp indicating when the lock should expire.
-     *
-     * @return int
-     */
-    protected function expiresAt()
-    {
-        return $this->seconds > 0 ? time() + $this->seconds : Carbon::now()->addDays(1)->getTimestamp();
-    }
-
-    /**
      * Release the lock.
      *
      * @return bool
@@ -105,9 +102,9 @@ class DatabaseLock extends Lock
     {
         if ($this->isOwnedByCurrentProcess()) {
             $this->connection->table($this->table)
-                        ->where('key', $this->name)
-                        ->where('owner', $this->owner)
-                        ->delete();
+                ->where('key', $this->name)
+                ->where('owner', $this->owner)
+                ->delete();
 
             return true;
         }
@@ -117,24 +114,12 @@ class DatabaseLock extends Lock
 
     /**
      * Releases this lock in disregard of ownership.
-     *
-     * @return void
      */
     public function forceRelease()
     {
         $this->connection->table($this->table)
-                    ->where('key', $this->name)
-                    ->delete();
-    }
-
-    /**
-     * Returns the owner value written into the driver for this lock.
-     *
-     * @return string
-     */
-    protected function getCurrentOwner()
-    {
-        return optional($this->connection->table($this->table)->where('key', $this->name)->first())->owner;
+            ->where('key', $this->name)
+            ->delete();
     }
 
     /**
@@ -145,5 +130,25 @@ class DatabaseLock extends Lock
     public function getConnectionName()
     {
         return $this->connection->getName();
+    }
+
+    /**
+     * Get the UNIX timestamp indicating when the lock should expire.
+     *
+     * @return int
+     */
+    protected function expiresAt()
+    {
+        return $this->seconds > 0 ? time() + $this->seconds : Carbon::now()->addDays(1)->getTimestamp();
+    }
+
+    /**
+     * Returns the owner value written into the driver for this lock.
+     *
+     * @return string
+     */
+    protected function getCurrentOwner()
+    {
+        return optional($this->connection->table($this->table)->where('key', $this->name)->first())->owner;
     }
 }

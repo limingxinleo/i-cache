@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Memcached;
@@ -9,16 +18,15 @@ class MemcachedConnector
     /**
      * Create a new Memcached connection.
      *
-     * @param  array  $servers
-     * @param  string|null  $connectionId
-     * @param  array  $options
-     * @param  array  $credentials
+     * @param null|string $connectionId
      * @return \Memcached
      */
     public function connect(array $servers, $connectionId = null, array $options = [], array $credentials = [])
     {
         $memcached = $this->getMemcached(
-            $connectionId, $credentials, $options
+            $connectionId,
+            $credentials,
+            $options
         );
 
         if (! $memcached->getServerList()) {
@@ -27,7 +35,9 @@ class MemcachedConnector
             // servers we'll verify the connection is successful and return it back.
             foreach ($servers as $server) {
                 $memcached->addServer(
-                    $server['host'], $server['port'], $server['weight']
+                    $server['host'],
+                    $server['port'],
+                    $server['weight']
                 );
             }
         }
@@ -38,9 +48,7 @@ class MemcachedConnector
     /**
      * Get a new Memcached instance.
      *
-     * @param  string|null  $connectionId
-     * @param  array  $credentials
-     * @param  array  $options
+     * @param null|string $connectionId
      * @return \Memcached
      */
     protected function getMemcached($connectionId, array $credentials, array $options)
@@ -61,20 +69,19 @@ class MemcachedConnector
     /**
      * Create the Memcached instance.
      *
-     * @param  string|null  $connectionId
+     * @param null|string $connectionId
      * @return \Memcached
      */
     protected function createMemcachedInstance($connectionId)
     {
-        return empty($connectionId) ? new Memcached : new Memcached($connectionId);
+        return empty($connectionId) ? new Memcached() : new Memcached($connectionId);
     }
 
     /**
      * Set the SASL credentials on the Memcached connection.
      *
-     * @param  \Memcached  $memcached
-     * @param  array  $credentials
-     * @return void
+     * @param \Memcached $memcached
+     * @param array $credentials
      */
     protected function setCredentials($memcached, $credentials)
     {

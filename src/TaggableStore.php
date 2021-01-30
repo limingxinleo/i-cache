@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache;
 
 use Illuminate\Contracts\Cache\Store;
@@ -9,7 +18,7 @@ abstract class TaggableStore implements Store
     /**
      * Begin executing a new tags operation.
      *
-     * @param  array|mixed  $names
+     * @param array|mixed $names
      * @return \Illuminate\Cache\TaggedCache
      */
     public function tags($names)

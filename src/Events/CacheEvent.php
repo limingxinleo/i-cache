@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 namespace Illuminate\Cache\Events;
 
 abstract class CacheEvent
@@ -21,9 +30,7 @@ abstract class CacheEvent
     /**
      * Create a new event instance.
      *
-     * @param  string  $key
-     * @param  array  $tags
-     * @return void
+     * @param string $key
      */
     public function __construct($key, array $tags = [])
     {
@@ -34,7 +41,7 @@ abstract class CacheEvent
     /**
      * Set the tags for the cache event.
      *
-     * @param  array  $tags
+     * @param array $tags
      * @return $this
      */
     public function setTags($tags)
