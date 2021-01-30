@@ -11,13 +11,12 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
+use _HumbugBoxcb6a53192cfd\Nette\NotSupportedException;
 use Exception;
-use Illuminate\Contracts\Cache\LockProvider;
-use Illuminate\Contracts\Cache\Store;
-use Illuminate\Contracts\Filesystem\LockTimeoutException;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Filesystem\LockableFile;
-use Illuminate\Support\InteractsWithTime;
+use Hyperf\Utils\Filesystem\Filesystem;
+use Hyperf\Utils\InteractsWithTime;
+use Illuminate\Cache\Contracts\LockProvider;
+use Illuminate\Cache\Contracts\Store;
 
 class FileStore implements Store, LockProvider
 {
@@ -28,7 +27,7 @@ class FileStore implements Store, LockProvider
     /**
      * The Illuminate Filesystem instance.
      *
-     * @var \Illuminate\Filesystem\Filesystem
+     * @var \Hyperf\Utils\Filesystem\Filesystem
      */
     protected $files;
 
@@ -107,33 +106,7 @@ class FileStore implements Store, LockProvider
      */
     public function add($key, $value, $seconds)
     {
-        $this->ensureCacheDirectoryExists($path = $this->path($key));
-
-        $file = new LockableFile($path, 'c+');
-
-        try {
-            $file->getExclusiveLock();
-        } catch (LockTimeoutException $e) {
-            $file->close();
-
-            return false;
-        }
-
-        $expire = $file->read(10);
-
-        if (empty($expire) || $this->currentTime() >= $expire) {
-            $file->truncate()
-                ->write($this->expiration($seconds) . serialize($value))
-                ->close();
-
-            $this->ensureFileHasCorrectPermissions($path);
-
-            return true;
-        }
-
-        $file->close();
-
-        return false;
+        throw new NotSupportedException();
     }
 
     /**
@@ -216,7 +189,7 @@ class FileStore implements Store, LockProvider
     /**
      * Get the Filesystem instance.
      *
-     * @return \Illuminate\Filesystem\Filesystem
+     * @return \Hyperf\Utils\Filesystem\Filesystem
      */
     public function getFilesystem()
     {

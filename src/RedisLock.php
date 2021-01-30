@@ -11,19 +11,21 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
+use Hyperf\Redis\Redis;
+
 class RedisLock extends Lock
 {
     /**
      * The Redis factory implementation.
      *
-     * @var \Illuminate\Redis\Connections\Connection
+     * @var Redis
      */
     protected $redis;
 
     /**
      * Create a new lock instance.
      *
-     * @param \Illuminate\Redis\Connections\Connection $redis
+     * @param Redis $redis
      * @param string $name
      * @param int $seconds
      * @param null|string $owner
@@ -64,16 +66,6 @@ class RedisLock extends Lock
     public function forceRelease()
     {
         $this->redis->del($this->name);
-    }
-
-    /**
-     * Get the name of the Redis connection being used to manage the lock.
-     *
-     * @return string
-     */
-    public function getConnectionName()
-    {
-        return $this->redis->getName();
     }
 
     /**

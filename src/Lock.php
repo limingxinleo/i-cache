@@ -11,10 +11,10 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\Lock as LockContract;
-use Illuminate\Contracts\Cache\LockTimeoutException;
-use Illuminate\Support\InteractsWithTime;
-use Illuminate\Support\Str;
+use Hyperf\Utils\InteractsWithTime;
+use Hyperf\Utils\Str;
+use Illuminate\Cache\Contracts\Lock as LockContract;
+use Illuminate\Cache\Contracts\LockTimeoutException;
 
 abstract class Lock implements LockContract
 {
@@ -106,7 +106,7 @@ abstract class Lock implements LockContract
      *
      * @param int $seconds
      * @param null|callable $callback
-     * @throws \Illuminate\Contracts\Cache\LockTimeoutException
+     * @throws \Illuminate\Cache\Contracts\LockTimeoutException
      * @return mixed
      */
     public function block($seconds, $callback = null)

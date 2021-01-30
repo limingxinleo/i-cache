@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
+        "hyperf/redis": "^2.0",
         "limingxinleo/happy-join-hyperf": "^1.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^0.12",
@@ -32,6 +33,9 @@
         "swoole/ide-helper": "dev-master",
         "swow/swow": "dev-develop",
         "symfony/var-dumper": "^5.1"
+    },
+    "suggests": {
+        "hyperf/redis": "Required to use redis driver. (^2.0)"
     },
     "config": {
         "sort-packages": true

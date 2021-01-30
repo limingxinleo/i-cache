@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Illuminate\Cache;
 
 use Closure;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Support\InteractsWithTime;
+use Hyperf\Utils\InteractsWithTime;
+use Illuminate\Cache\Contracts\Repository as Cache;
 
 class RateLimiter
 {
@@ -22,7 +22,7 @@ class RateLimiter
     /**
      * The cache store implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Repository
+     * @var \Illuminate\Cache\Contracts\Repository
      */
     protected $cache;
 

@@ -11,17 +11,15 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\LockProvider;
-use Illuminate\Contracts\Redis\Factory as Redis;
+use Hyperf\Redis\RedisFactory;
+use Illuminate\Cache\Contracts\LockProvider;
 
 class RedisStore extends TaggableStore implements LockProvider
 {
     /**
-     * The Redis factory implementation.
-     *
-     * @var \Illuminate\Contracts\Redis\Factory
+     * @var RedisFactory
      */
-    protected $redis;
+    protected $factory;
 
     /**
      * A string that should be prepended to keys.
@@ -50,9 +48,9 @@ class RedisStore extends TaggableStore implements LockProvider
      * @param string $prefix
      * @param string $connection
      */
-    public function __construct(Redis $redis, $prefix = '', $connection = 'default')
+    public function __construct(RedisFactory $factory, $prefix = '', $connection = 'default')
     {
-        $this->redis = $redis;
+        $this->factory = $factory;
         $this->setPrefix($prefix);
         $this->setConnection($connection);
     }
@@ -254,21 +252,21 @@ class RedisStore extends TaggableStore implements LockProvider
     /**
      * Get the Redis connection instance.
      *
-     * @return \Illuminate\Redis\Connections\Connection
+     * @return \Hyperf\Redis\RedisProxy
      */
     public function connection()
     {
-        return $this->redis->connection($this->connection);
+        return $this->factory->get($this->connection);
     }
 
     /**
      * Get the Redis connection instance that should be used to manage locks.
      *
-     * @return \Illuminate\Redis\Connections\Connection
+     * @return \Hyperf\Redis\RedisProxy
      */
     public function lockConnection()
     {
-        return $this->redis->connection($this->lockConnection ?? $this->connection);
+        return $this->factory->get($this->lockConnection ?? $this->connection);
     }
 
     /**
@@ -292,16 +290,6 @@ class RedisStore extends TaggableStore implements LockProvider
         $this->lockConnection = $connection;
 
         return $this;
-    }
-
-    /**
-     * Get the Redis database instance.
-     *
-     * @return \Illuminate\Contracts\Redis\Factory
-     */
-    public function getRedis()
-    {
-        return $this->redis;
     }
 
     /**

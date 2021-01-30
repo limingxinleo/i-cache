@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Illuminate\Contracts\Cache\LockProvider;
+use Illuminate\Cache\Contracts\LockProvider;
 
 class NullStore extends TaggableStore implements LockProvider
 {
