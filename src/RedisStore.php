@@ -303,6 +303,16 @@ class RedisStore extends TaggableStore implements LockProvider
     }
 
     /**
+     * Get the Redis database instance.
+     *
+     * @return RedisFactory
+     */
+    public function getRedis()
+    {
+        return $this->factory;
+    }
+
+    /**
      * Set the cache key prefix.
      *
      * @param string $prefix
