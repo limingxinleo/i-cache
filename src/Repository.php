@@ -13,18 +13,19 @@ namespace Illuminate\Cache;
 
 use ArrayAccess;
 use BadMethodCallException;
+use Carbon\Carbon;
 use Closure;
 use DateTimeInterface;
+use Hyperf\Utils\InteractsWithTime;
+use Hyperf\Utils\Traits\Macroable;
+use Illuminate\Cache\Contracts\Repository as CacheContract;
+use Illuminate\Cache\Contracts\Store;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
 use Illuminate\Cache\Events\KeyWritten;
-use Illuminate\Cache\Contracts\Repository as CacheContract;
-use Illuminate\Cache\Contracts\Store;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\InteractsWithTime;
-use Illuminate\Support\Traits\Macroable;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @mixin \Illuminate\Cache\Contracts\Store
@@ -46,7 +47,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * The event dispatcher implementation.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var EventDispatcherInterface
      */
     protected $events;
 
@@ -518,7 +519,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Get the event dispatcher instance.
      *
-     * @return \Illuminate\Contracts\Events\Dispatcher
+     * @return EventDispatcherInterface
      */
     public function getEventDispatcher()
     {
@@ -528,7 +529,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Set the event dispatcher instance.
      */
-    public function setEventDispatcher(Dispatcher $events)
+    public function setEventDispatcher(EventDispatcherInterface $events)
     {
         $this->events = $events;
     }
