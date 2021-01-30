@@ -91,3 +91,15 @@ return [
 
 ## 使用
 
+文档地址 https://learnku.com/docs/laravel/8.x/cache/9389
+
+### 助手函数
+
+本组件实现了与 Laravel 一模一样的助手函数，但增加了命名空间，故使用时，可以按照以下方式
+
+```php
+<?php
+use function Illuminate\Cache\cache;
+
+cache()->put('xxx', 'yyy');
+```

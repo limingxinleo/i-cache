@@ -10,7 +10,10 @@
     "autoload": {
         "psr-4": {
             "Illuminate\\Cache\\": "src/"
-        }
+        },
+        "files": [
+            "src/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
