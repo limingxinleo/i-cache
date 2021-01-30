@@ -30,6 +30,14 @@ class ConfigProvider
                     ],
                 ],
             ],
+            'publish' => [
+                [
+                    'id' => 'config',
+                    'description' => 'The config for i-cache.',
+                    'source' => __DIR__ . '/../publish/i_cache.php',
+                    'destination' => BASE_PATH . '/config/autoload/i_cache.php',
+                ],
+            ],
         ];
     }
 }
