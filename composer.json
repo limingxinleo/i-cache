@@ -54,6 +54,9 @@
         "cs-fix": "php-cs-fixer fix $1"
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
         "hyperf": {
             "config": "Illuminate\\Cache\\ConfigProvider"
         }
