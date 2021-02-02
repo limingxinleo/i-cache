@@ -6,7 +6,7 @@
         "php",
         "hyperf"
     ],
-    "description": "",
+    "description": "Illuminate Cache for Hyperf",
     "autoload": {
         "psr-4": {
             "Illuminate\\Cache\\": "src/"
