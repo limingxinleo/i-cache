@@ -45,9 +45,9 @@ class RedisLock extends Lock
     public function acquire()
     {
         if ($this->seconds > 0) {
-            return $this->redis->set($this->name, $this->owner, 'EX', $this->seconds, 'NX') == true;
+            return $this->redis->set($this->name, $this->owner, ['EX' => $this->seconds, 'NX']) == true;
         }
-        return $this->redis->setnx($this->name, $this->owner) === 1;
+        return $this->redis->setnx($this->name, $this->owner) == true;
     }
 
     /**
@@ -57,7 +57,7 @@ class RedisLock extends Lock
      */
     public function release()
     {
-        return (bool) $this->redis->eval(LuaScripts::releaseLock(), 1, $this->name, $this->owner);
+        return (bool) $this->redis->eval(LuaScripts::releaseLock(), [$this->name, $this->owner], 1);
     }
 
     /**
