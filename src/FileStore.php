@@ -11,12 +11,12 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use _HumbugBoxcb6a53192cfd\Nette\NotSupportedException;
 use Exception;
 use Hyperf\Utils\Filesystem\Filesystem;
 use Hyperf\Utils\InteractsWithTime;
 use Illuminate\Cache\Contracts\LockProvider;
 use Illuminate\Cache\Contracts\Store;
+use Illuminate\Cache\Exceptions\NotSupportedException;
 
 class FileStore implements Store, LockProvider
 {

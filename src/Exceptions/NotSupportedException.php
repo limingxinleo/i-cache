@@ -11,6 +11,6 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache\Exceptions;
 
-class NotSupportException extends \RuntimeException
+class NotSupportedException extends \RuntimeException
 {
 }
