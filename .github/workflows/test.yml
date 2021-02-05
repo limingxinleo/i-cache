@@ -43,7 +43,7 @@ jobs:
           sudo sh -c "echo extension=swoole > /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini"
           php --ri swoole
       - name: Setup Swow
-        if: ${{ matrix.engine == 'swow' }}
+        if: ${{ matrix.engine == 'swow' && matrix.php-version != '7.2' }}
         run: |
           wget https://github.com/swow/swow/archive/"${SWOW_VERSION}".tar.gz -O swow.tar.gz
           mkdir -p swow

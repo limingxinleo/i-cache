@@ -42,7 +42,6 @@
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": ">=7.0",
         "swoole/ide-helper": "dev-master",
-        "swow/swow": "dev-develop",
         "symfony/var-dumper": "^5.1"
     },
     "replace": {
@@ -51,7 +50,10 @@
     "suggests": {
         "hyperf/redis": "Required to use redis driver. (^2.0)"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
+        "optimize-autoloader": true,
         "sort-packages": true
     },
     "scripts": {
