@@ -30,7 +30,7 @@
         "php": ">=8.0",
         "hyperf/di": "^3.0",
         "hyperf/utils": "^3.0",
-        "nesbot/carbon": "^3.0",
+        "nesbot/carbon": "^2.0",
         "psr/simple-cache": "^1.0"
     },
     "require-dev": {
