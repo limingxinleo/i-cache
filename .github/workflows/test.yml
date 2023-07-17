@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php-version: ['7.2', '7.3', '7.4']
+        php-version: ['8.0', '8.1', '8.2']
         engine: ['none', 'swoole', 'swow']
       max-parallel: 5
     steps:
@@ -24,7 +24,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           tools: phpize
-          ini-values: opcache.enable_cli=1
+          ini-values: opcache.enable_cli=0
           coverage: none
       - name: Setup Redis
         run: docker run --name redis -p 6379:6379 --restart always -d redis
@@ -43,7 +43,7 @@ jobs:
           sudo sh -c "echo extension=swoole > /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini"
           php --ri swoole
       - name: Setup Swow
-        if: ${{ matrix.engine == 'swow' && matrix.php-version != '7.2' }}
+        if: ${{ matrix.engine == 'swow' }}
         run: |
           wget https://github.com/swow/swow/archive/"${SWOW_VERSION}".tar.gz -O swow.tar.gz
           mkdir -p swow
