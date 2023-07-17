@@ -29,9 +29,14 @@ jobs:
           extensions: redis, pdo, pdo_mysql, bcmath, swoole
       - name: Setup Redis
         run: docker run --name redis -p 6379:6379 --restart always -d redis
+      - name: Setup Swoole
+        if: ${{ matrix.engine == 'swoole' }}
+        run: |
+          php --ri swoole
       - name: Setup Swow
         if: ${{ matrix.engine == 'swow' }}
         run: |
+          rm -rf /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini
           wget https://github.com/swow/swow/archive/"${SWOW_VERSION}".tar.gz -O swow.tar.gz
           mkdir -p swow
           tar -xf swow.tar.gz -C swow --strip-components=1
@@ -43,7 +48,6 @@ jobs:
           make -j "$(nproc)"
           sudo make install
           sudo sh -c "echo extension=swow > /etc/php/${{ matrix.php-version }}/cli/conf.d/swow.ini"
-          sudo rm -rf /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini
           php --ri swow
       - name: Setup Packages
         run: composer update -o
