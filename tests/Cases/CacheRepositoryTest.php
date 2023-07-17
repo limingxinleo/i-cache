@@ -222,14 +222,14 @@ class CacheRepositoryTest extends AbstractTestCase
         $this->assertFalse($result);
     }
 
-    public function dataProviderTestGetSeconds()
+    public static function dataProviderTestGetSeconds()
     {
-        Carbon::setTestNow(Carbon::parse($this->getTestDate()));
+        Carbon::setTestNow(Carbon::parse(self::getTestDate()));
 
         return [
             [Carbon::now()->addMinutes(5)],
-            [(new DateTime($this->getTestDate()))->modify('+5 minutes')],
-            [(new DateTimeImmutable($this->getTestDate()))->modify('+5 minutes')],
+            [(new DateTime(self::getTestDate()))->modify('+5 minutes')],
+            [(new DateTimeImmutable(self::getTestDate()))->modify('+5 minutes')],
             [new DateInterval('PT5M')],
             [300],
         ];
@@ -362,7 +362,7 @@ class CacheRepositoryTest extends AbstractTestCase
         return $repository;
     }
 
-    protected function getTestDate()
+    protected static function getTestDate()
     {
         return '2030-07-25 12:13:14 UTC';
     }
