@@ -8,13 +8,12 @@ env:
 
 jobs:
   ci:
-    name: Test PHP ${{ matrix.php-version }} on ${{ matrix.engine }}
+    name: Test PHP ${{ matrix.php-version }}
     runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
         os: [ ubuntu-latest ]
         php-version: [ '8.0', '8.1', '8.2' ]
-        engine: [ 'swoole', 'swow' ]
       max-parallel: 5
     steps:
       - name: Checkout
@@ -29,31 +28,8 @@ jobs:
           extensions: redis, pdo, pdo_mysql, bcmath, swoole
       - name: Setup Redis
         run: docker run --name redis -p 6379:6379 --restart always -d redis
-      - name: Setup Swoole
-        if: ${{ matrix.engine == 'swoole' }}
-        run: |
-          php --ri swoole
-      - name: Setup Swow
-        if: ${{ matrix.engine == 'swow' }}
-        run: |
-          rm -rf /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini
-          wget https://github.com/swow/swow/archive/"${SWOW_VERSION}".tar.gz -O swow.tar.gz
-          mkdir -p swow
-          tar -xf swow.tar.gz -C swow --strip-components=1
-          rm swow.tar.gz
-          cd swow/ext || exit
-
-          phpize
-          ./configure --enable-debug
-          make -j "$(nproc)"
-          sudo make install
-          sudo sh -c "echo extension=swow > /etc/php/${{ matrix.php-version }}/cli/conf.d/swow.ini"
-          php --ri swow
       - name: Setup Packages
         run: composer update -o
-      - name: Setup Swow Engine
-        if: ${{ matrix.engine == 'swow' && matrix.php-version != '7.2' }}
-        run: composer require hyperf/engine-swow -o
       - name: Run Test Cases
         run: |
           composer analyse
