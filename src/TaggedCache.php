@@ -58,10 +58,11 @@ class TaggedCache extends Repository
      *
      * @param string $key
      * @param mixed $value
+     * @return bool|int
      */
     public function increment($key, $value = 1)
     {
-        $this->store->increment($this->itemKey($key), $value);
+       return $this->store->increment($this->itemKey($key), $value);
     }
 
     /**
@@ -69,10 +70,11 @@ class TaggedCache extends Repository
      *
      * @param string $key
      * @param mixed $value
+     * @return bool|int
      */
     public function decrement($key, $value = 1)
     {
-        $this->store->decrement($this->itemKey($key), $value);
+        return $this->store->decrement($this->itemKey($key), $value);
     }
 
     /**

@@ -13,7 +13,7 @@ namespace Illuminate\Cache;
 
 use Exception;
 use Hyperf\Utils\Filesystem\Filesystem;
-use Hyperf\Utils\InteractsWithTime;
+use Hyperf\Support\Traits\InteractsWithTime;
 use Illuminate\Cache\Contracts\LockProvider;
 use Illuminate\Cache\Contracts\Store;
 use Illuminate\Cache\Exceptions\NotSupportedException;

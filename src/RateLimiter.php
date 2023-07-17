@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Illuminate\Cache;
 
 use Closure;
-use Hyperf\Utils\InteractsWithTime;
+use Hyperf\Support\Traits\InteractsWithTime;
 use Illuminate\Cache\Contracts\Repository as Cache;
 
 class RateLimiter

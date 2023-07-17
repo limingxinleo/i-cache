@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
-use Hyperf\Utils\InteractsWithTime;
+use Hyperf\Support\Traits\InteractsWithTime;
 use Illuminate\Cache\Contracts\LockProvider;
 
 class ArrayStore extends TaggableStore implements LockProvider
