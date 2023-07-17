@@ -13,6 +13,7 @@ namespace HyperfTest\Cases;
 
 use Carbon\Carbon;
 use Illuminate\Cache\ArrayStore;
+use stdClass;
 
 /**
  * @internal
@@ -210,7 +211,7 @@ class CacheArrayStoreTest extends AbstractTestCase
     public function testValuesAreNotStoredByReference()
     {
         $store = new ArrayStore($serialize = true);
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->foo = true;
 
         $store->put('object', $object, 10);
@@ -222,7 +223,7 @@ class CacheArrayStoreTest extends AbstractTestCase
     public function testValuesAreStoredByReferenceIfSerializationIsDisabled()
     {
         $store = new ArrayStore();
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->foo = true;
 
         $store->put('object', $object, 10);

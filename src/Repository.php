@@ -15,9 +15,10 @@ use ArrayAccess;
 use BadMethodCallException;
 use Carbon\Carbon;
 use Closure;
+use DateInterval;
 use DateTimeInterface;
-use Hyperf\Support\Traits\InteractsWithTime;
 use Hyperf\Macroable\Macroable;
+use Hyperf\Support\Traits\InteractsWithTime;
 use Illuminate\Cache\Contracts\Repository as CacheContract;
 use Illuminate\Cache\Contracts\Store;
 use Illuminate\Cache\Events\CacheHit;
@@ -159,9 +160,6 @@ class Repository implements ArrayAccess, CacheContract
         })->all();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMultiple($keys, $default = null)
     {
         $defaults = [];
@@ -192,7 +190,7 @@ class Repository implements ArrayAccess, CacheContract
      *
      * @param string $key
      * @param mixed $value
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null)
@@ -219,9 +217,6 @@ class Repository implements ArrayAccess, CacheContract
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($key, $value, $ttl = null)
     {
         return $this->put($key, $value, $ttl);
@@ -230,7 +225,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Store multiple items in the cache for a given number of seconds.
      *
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function putMany(array $values, $ttl = null)
@@ -256,9 +251,6 @@ class Repository implements ArrayAccess, CacheContract
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setMultiple($values, $ttl = null)
     {
         return $this->putMany(is_array($values) ? $values : iterator_to_array($values), $ttl);
@@ -269,7 +261,7 @@ class Repository implements ArrayAccess, CacheContract
      *
      * @param string $key
      * @param mixed $value
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null)
@@ -351,7 +343,7 @@ class Repository implements ArrayAccess, CacheContract
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string $key
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return mixed
      */
     public function remember($key, $ttl, Closure $callback)
@@ -418,17 +410,11 @@ class Repository implements ArrayAccess, CacheContract
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete($key)
     {
         return $this->forget($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteMultiple($keys)
     {
         $result = true;
@@ -442,9 +428,6 @@ class Repository implements ArrayAccess, CacheContract
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
         return $this->store->flush();
@@ -454,8 +437,8 @@ class Repository implements ArrayAccess, CacheContract
      * Begin executing a new tags operation if the store supports it.
      *
      * @param array|mixed $names
-     * @throws \BadMethodCallException
      * @return \Illuminate\Cache\TaggedCache
+     * @throws BadMethodCallException
      */
     public function tags($names)
     {
@@ -537,7 +520,6 @@ class Repository implements ArrayAccess, CacheContract
      * Determine if a cached value exists.
      *
      * @param string $key
-     * @return bool
      */
     public function offsetExists($key): bool
     {
@@ -548,7 +530,6 @@ class Repository implements ArrayAccess, CacheContract
      * Retrieve an item from the cache by key.
      *
      * @param string $key
-     * @return mixed
      */
     public function offsetGet($key): mixed
     {
@@ -635,7 +616,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Calculate the number of seconds for the given TTL.
      *
-     * @param \DateInterval|\DateTimeInterface|int $ttl
+     * @param DateInterval|DateTimeInterface|int $ttl
      * @return int
      */
     protected function getSeconds($ttl)

@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
+use Exception;
 use Hyperf\Utils\ApplicationContext;
 use Illuminate\Cache\Exceptions\InvalidArgumentException;
 
@@ -21,8 +22,8 @@ if (! function_exists('Illuminate\\Cache\\cache')) {
      * If an array is passed, we'll assume you want to put to the cache.
      *
      * @param  dynamic  key|key,default|data,expiration|null
-     * @throws \Exception
      * @return \Illuminate\Cache\CacheManager|mixed
+     * @throws Exception
      */
     function cache()
     {

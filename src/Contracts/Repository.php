@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace Illuminate\Cache\Contracts;
 
 use Closure;
+use DateInterval;
+use DateTimeInterface;
 use Psr\SimpleCache\CacheInterface;
 
 interface Repository extends CacheInterface
@@ -30,7 +32,7 @@ interface Repository extends CacheInterface
      *
      * @param string $key
      * @param mixed $value
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null);
@@ -40,7 +42,7 @@ interface Repository extends CacheInterface
      *
      * @param string $key
      * @param mixed $value
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null);
@@ -76,7 +78,7 @@ interface Repository extends CacheInterface
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string $key
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return mixed
      */
     public function remember($key, $ttl, Closure $callback);

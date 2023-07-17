@@ -62,7 +62,7 @@ class TaggedCache extends Repository
      */
     public function increment($key, $value = 1)
     {
-       return $this->store->increment($this->itemKey($key), $value);
+        return $this->store->increment($this->itemKey($key), $value);
     }
 
     /**
@@ -110,9 +110,6 @@ class TaggedCache extends Repository
         return $this->tags;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function itemKey($key)
     {
         return $this->taggedItemKey($key);

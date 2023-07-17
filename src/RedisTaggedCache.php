@@ -11,6 +11,9 @@ declare(strict_types=1);
  */
 namespace Illuminate\Cache;
 
+use DateInterval;
+use DateTimeInterface;
+
 class RedisTaggedCache extends TaggedCache
 {
     /**
@@ -18,21 +21,21 @@ class RedisTaggedCache extends TaggedCache
      *
      * @var string
      */
-    const REFERENCE_KEY_FOREVER = 'forever_ref';
+    public const REFERENCE_KEY_FOREVER = 'forever_ref';
 
     /**
      * Standard reference key.
      *
      * @var string
      */
-    const REFERENCE_KEY_STANDARD = 'standard_ref';
+    public const REFERENCE_KEY_STANDARD = 'standard_ref';
 
     /**
      * Store an item in the cache.
      *
      * @param string $key
      * @param mixed $value
-     * @param null|\DateInterval|\DateTimeInterface|int $ttl
+     * @param null|DateInterval|DateTimeInterface|int $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null)

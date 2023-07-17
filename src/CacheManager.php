@@ -190,8 +190,8 @@ class CacheManager implements FactoryContract
      * Resolve the given store.
      *
      * @param string $name
-     * @throws \InvalidArgumentException
      * @return \Illuminate\Cache\Contracts\Repository
+     * @throws InvalidArgumentException
      */
     protected function resolve($name)
     {
